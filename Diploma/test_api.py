@@ -3,7 +3,7 @@ import allure
 import requests
 from Pages.kinopoisk_api_page import KinopoiskAPI
 
-
+@pytest.mark.api
 @allure.feature("API Кинопоиск.dev")
 class TestKinopoiskAPI:
 
@@ -45,14 +45,11 @@ class TestKinopoiskAPI:
     @allure.severity(allure.severity_level.MINOR)
     @allure.description("Проверяем, что поиск фильма с годом выпуска 3025 не возвращает данных.")
     def test_search_movie_invalid_year(self, api):
-        url = f"{api.BASE_URL}/movie"
-        params = {"year": 1750}
-        response = api.search_movie_by_year(params)
+        response = api.search_movie_by_year("1750")
+        assert response.status_code == 400, "Ожидался статус 400 для несуществующего года"
         data = response.json()
-        # assert data == 'Bad Request', "Нашлись фильмы с несуществующим годом"
-        # assert response.status_code == 400
+        assert "error" in data or "message" in data, "Должна быть ошибка в ответе"
         print(data)
-
 
     @allure.title("Негативный тест — поиск актёра с нулевым ID")
     @allure.severity(allure.severity_level.CRITICAL)

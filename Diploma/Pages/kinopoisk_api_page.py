@@ -27,15 +27,18 @@ class KinopoiskAPI:
         """Ищет фильм по названию."""
         url = f"{self.BASE_URL}/movie/search"
         params = {"query": title}
-        response = requests.get(url, headers=self.headers, params=params)
+        response = requests.get(url, headers=self.headers, params=params, timeout=60)
         return response
 
     @allure.step("Поиск фильма по году: {year}")
     def search_movie_by_year(self, year: str)-> None:
         """Ищет фильм по году."""
         url = f"{self.BASE_URL}/movie"
-        params = {"query": year}
-        response = requests.get(url, headers=self.headers, params=params)
+        params = {'page': 1,
+                   'limit': 10,
+                    'year': year
+                  }
+        response = requests.get(url, headers=self.headers, params=params, timeout=60)
         return response
 
     @allure.step("Поиск актёра по имени: {name}")
@@ -43,7 +46,7 @@ class KinopoiskAPI:
         """Ищет актёра по имени."""
         url = f"{self.BASE_URL}/person/search"
         params = {"query": name}
-        response = requests.get(url, headers=self.headers, params=params)
+        response = requests.get(url, headers=self.headers, params=params, timeout=60)
         return response
 
     @allure.step("Получение информации о фильме по ID: {movie_id}")
@@ -57,5 +60,5 @@ class KinopoiskAPI:
     def get_person_by_id(self, person_id: int)-> None:
         """Возвращает данные об актёре по ID."""
         url = f"{self.BASE_URL}/person/{person_id}"
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers, timeout=60)
         return response

@@ -3,6 +3,7 @@ from selenium import webdriver
 import pytest
 import allure
 
+@pytest.mark.ui
 @pytest.fixture
 def driver():
     driver = webdriver.Chrome()
