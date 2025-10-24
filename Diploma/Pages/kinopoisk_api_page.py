@@ -13,7 +13,7 @@ import os
 
 
 class KinopoiskAPI:
-    """Page Object для работы с API Кинопоиск.dev"""
+    """Page Object для работы c API Кинопоиск.dev"""
 
     load_dotenv()
     token = os.getenv("Token")
@@ -36,7 +36,7 @@ class KinopoiskAPI:
         url = f"{self.BASE_URL}/movie"
         params = {'page': 1,
                    'limit': 10,
-                    'year': year
+                   'year': year
                   }
         response = requests.get(url, headers=self.headers, params=params, timeout=60)
         return response
@@ -49,16 +49,16 @@ class KinopoiskAPI:
         response = requests.get(url, headers=self.headers, params=params, timeout=60)
         return response
 
-    @allure.step("Получение информации о фильме по ID: {movie_id}")
+    @allure.step("Получение информации c фильме по ID: {movie_id}")
     def get_movie_by_id(self, movie_id: int)-> None:
         """Возвращает данные о фильме по ID."""
         url = f"{self.BASE_URL}/movie/{movie_id}"
         response = requests.get(url, headers=self.headers)
         return response
 
-    @allure.step("Получение информации об актёре по ID: {person_id}")
+    @allure.step("Получение информации пo актёру по ID: {person_id}")
     def get_person_by_id(self, person_id: int)-> None:
-        """Возвращает данные об актёре по ID."""
+        """Возвращает данные пo актёре по ID."""
         url = f"{self.BASE_URL}/person/{person_id}"
         response = requests.get(url, headers=self.headers, timeout=60)
         return response
